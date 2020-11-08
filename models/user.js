@@ -1,30 +1,30 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema(
     {
         email: {
             type: String,
-            required: true,
+            required: [true, 'Поле `email` должно быть заполнено'],
             unique: true,
             validate: {
-                validator(v) {
-                    return /.+@.+\..+/i.test(v);
-                },
-                message: (props) => `${props.value} не корректный Email`,
+                validator: (email) => validator.isEmail(email),
+                message: 'Поле "link" должно быть валидным url-адресом',
             },
         },
 
         password: {
             type: String,
-            required: true,
+            required: [true, 'Поле `password` должно быть заполнено'],
+            minlength: [5, 'Поле `password` должно содержать 5 символов или больше'],
             select: false,
         },
 
         name: {
             type: String,
-            required: true,
-            minlength: 2,
-            maxlength: 30,
+            required: [true, 'Поле `name` должно быть заполнено'],
+            minlength: [2, 'Поле `name` должно содержать от 2 до 30 символов'],
+            maxlength: [30, 'Поле `name` должно содержать от 2 до 30 символов'],
         },
     },
     { versionKey: false },

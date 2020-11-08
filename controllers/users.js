@@ -4,6 +4,7 @@ const User = require('../models/user');
 const ConflictError = require('../errors/ConflictError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const NotFoundError = require('../errors/NotFoundError');
+const BadRequestError = require('../errors/BadRequestError');
 
 const { JWT_SECRET, NODE_ENV } = process.env;
 
@@ -17,7 +18,13 @@ const createUser = (req, res, next) => {
           .then((newUser) => res
             .status(200)
             .send({ success: true, message: `Пользователь ${newUser.email} успешно создан` }))
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            if(err.name === 'ValidationError') {
+              next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
+            } else {
+              next(err);
+            }
+          });
       })
       .catch(next);
   });
