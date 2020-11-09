@@ -10,7 +10,7 @@ const { JWT_SECRET, NODE_ENV } = process.env;
 
 const createUser = (req, res, next) => {
   const { email, password, name } = req.body;
-  bcrypt.hash(password, 10, (error, hash) => {
+  bcrypt.hash(password, 10, (hash) => {
     User.findOne({ email })
       .then((user) => {
         if (user) return next(new ConflictError('Такой пользователь уже существует'));
@@ -19,7 +19,7 @@ const createUser = (req, res, next) => {
             .status(200)
             .send({ success: true, message: `Пользователь ${newUser.email} успешно создан` }))
           .catch((err) => {
-            if(err.name === 'ValidationError') {
+            if (err.name === 'ValidationError') {
               next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
             } else {
               next(err);
@@ -62,5 +62,5 @@ const getUserInfo = (req, res, next) => {
 module.exports = {
   createUser,
   userAuth,
-  getUserInfo
+  getUserInfo,
 };

@@ -1,24 +1,24 @@
 const apiRouter = require('express').Router();
 const auth = require('../middlewares/auth');
-const checkPassword = require('../middlewares/checkPassword')
+const checkPassword = require('../middlewares/checkPassword');
 
 const {
-    createUser,
-    userAuth,
-    getUserInfo
+  createUser,
+  userAuth,
+  getUserInfo,
 } = require('../controllers/users');
 
 const {
-    getArticlesById,
-    createArticle,
-    deleteArticle
+  getArticlesById,
+  createArticle,
+  deleteArticle,
 } = require('../controllers/article');
 
 const {
-    validationRegisterUser,
-    validationLoginUser,
-    validationArticle,
-    validationParamsId
+  validationRegisterUser,
+  validationLoginUser,
+  validationArticle,
+  validationParamsId,
 } = require('../middlewares/requestValidation');
 
 apiRouter.post('/signin', validationLoginUser, checkPassword, userAuth); //
@@ -31,5 +31,5 @@ apiRouter.post('/articles', validationArticle, auth, createArticle); //
 apiRouter.delete('/articles/:articleId', validationParamsId, auth, deleteArticle); //
 
 module.exports = {
-    apiRouter,
+  apiRouter,
 };
