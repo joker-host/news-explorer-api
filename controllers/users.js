@@ -10,7 +10,7 @@ const { JWT_SECRET, NODE_ENV } = process.env;
 
 const createUser = (req, res, next) => {
   const { email, password, name } = req.body;
-  bcrypt.hash(password, 10, (hash) => {
+  bcrypt.hash(password, 10, (errors, hash) => {
     User.findOne({ email })
       .then((user) => {
         if (user) return next(new ConflictError('Такой пользователь уже существует'));
