@@ -43,26 +43,26 @@ const validationLoginUser = celebrate({
 
 const validationArticle = celebrate({
   body: Joi.object().keys({
-    keyword: Joi.string().required().min(2).max(20)
+    keyword: Joi.string().required().min(2).max(30)
       .messages({
         'string.base': 'Поле `keyword` должно быть заполнено типом данных: `Строка`',
         'string.empty': 'Поле `keyword` должно быть заполнено',
         'string.min': 'Поле `keyword` должно содержать минимум 2 символа',
-        'string.max': 'Поле `keyword` должно содержать максимум 20 символов',
+        'string.max': 'Поле `keyword` должно содержать максимум 30 символов',
       }),
-    title: Joi.string().required().min(2).max(20)
+    title: Joi.string().required().min(2).max(100)
       .messages({
         'string.base': 'Поле `title` должно быть заполнено типом данных: `Строка`',
         'string.empty': 'Поле `title` должно быть заполнено',
         'string.min': 'Поле `title` должно содержать минимум 2 символа',
-        'string.max': 'Поле `title` должно содержать максимум 20 символов',
+        'string.max': 'Поле `title` должно содержать максимум 100 символов',
       }),
-    text: Joi.string().required().min(2).max(30)
+    text: Joi.string().required().min(2).max(250)
       .messages({
         'string.base': 'Поле `text` должно быть заполнено типом данных: `Строка`',
         'string.empty': 'Поле `text` должно быть заполнено',
         'string.min': 'Поле `text` должно содержать минимум 2 символа',
-        'string.max': 'Поле `text` должно содержать максимум 30 символов',
+        'string.max': 'Поле `text` должно содержать максимум 250 символов',
       }),
     date: Joi.string().isoDate()
       .messages({
