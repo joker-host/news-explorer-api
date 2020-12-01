@@ -57,12 +57,11 @@ const validationArticle = celebrate({
         'string.min': 'Поле `title` должно содержать минимум 2 символа',
         'string.max': 'Поле `title` должно содержать максимум 100 символов',
       }),
-    text: Joi.string().required().min(2).max(250)
+    text: Joi.string().required().min(2)
       .messages({
         'string.base': 'Поле `text` должно быть заполнено типом данных: `Строка`',
         'string.empty': 'Поле `text` должно быть заполнено',
         'string.min': 'Поле `text` должно содержать минимум 2 символа',
-        'string.max': 'Поле `text` должно содержать максимум 250 символов',
       }),
     date: Joi.string().isoDate()
       .messages({
