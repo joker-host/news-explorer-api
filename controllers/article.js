@@ -6,7 +6,7 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 const getArticlesById = (req, res, next) => {
   Article.find({ owner: req.user.id })
     .orFail(() => {
-      send([])
+      res.status(200).send([])
     })
     .then((data) => res.status(200).send(data))
     .catch(next);
