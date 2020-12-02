@@ -27,10 +27,7 @@ const createArticle = (req, res, next) => {
       if (!article) {
         next(new BadRequestError('Переданы некорректные данные'));
       }
-      Article.find({ owner: req.user.id })
-        .orFail(new UnauthorizedError('Необходимо авторизоваться'))
-        .then((data) => res.status(200).send(data))
-        .catch(next);
+      res.status(201).send(article);
     })
     .catch(next);
 };
@@ -38,12 +35,7 @@ const createArticle = (req, res, next) => {
 const deleteArticle = (req, res, next) => {
   Article.findOneAndDelete({ _id: req.params.articleId })
     .orFail(new NotFoundError('Статья не найдена'))
-    .then(() => {
-      Article.find({ owner: req.user.id })
-        .orFail(new UnauthorizedError('Необходимо авторизоваться'))
-        .then((data) => res.status(200).send({data, message: `Статья ${req.params.articleId} удалена`}))
-        .catch(next);
-    })
+    .then(() => res.status(200).send({ message: `Статья ${req.params.articleId} удалена` }))
     .catch(next);
 };
 
