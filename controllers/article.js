@@ -27,7 +27,10 @@ const createArticle = (req, res, next) => {
       if (!article) {
         next(new BadRequestError('Переданы некорректные данные'));
       }
-      res.status(201).send(article);
+      Article.find({ owner: req.user.id })
+        .orFail(new UnauthorizedError('Необходимо авторизоваться'))
+        .then((data) => res.status(200).send(data))
+        .catch(next);
     })
     .catch(next);
 };
